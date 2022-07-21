@@ -1,50 +1,47 @@
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
-import React, {useEffect, useState, useCallback} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import Entypo from '@expo/vector-icons/Entypo';
 import * as Font from 'expo-font';
-import text from "react-native-web/dist/exports/Text";
-
-SplashScreen.preventAutoHideAsync();
+import {Ionicons} from "@expo/vector-icons"
+import { useAssets } from 'expo-asset';
 
 export default function App() {
-  const [appIsReady, setAppIsReady] = useState(false);
-  useEffect(() => {
-    async function prepare() {
-      try {
-        // Pre-load fonts, make any API calls you need to do here
-        await Font.loadAsync(Entypo.font);
-        // Artificially delay for two seconds to simulate a slow loading
-        // experience. Please remove this if you copy and paste the code!
-        await new Promise(resolve => setTimeout(resolve, 2000));
-      } catch (e) {
-        console.warn(e);
-      } finally {
-        // Tell the application to render
-        setAppIsReady(true);
-      }
+    const [assets] = useAssets([require("./b9472222.png")]);
+    const [loaded] = Font.useFonts(Ionicons.font);
+    if (!assets || !loaded) {
+        return (
+            <View
+                style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <Text>Hi incomplete SplashScreen Demo! 👋</Text>
+                <Entypo name="rocket" size={30}/>
+            </View>
+            );
     }
-
-    prepare();
-  }, []);
-
-  const onLayoutRootView = useCallback(async () => {
-    if (appIsReady) {
-      await SplashScreen.hideAsync();
-    }
-  }, [appIsReady]);
-
-  if (!appIsReady) {
-    return null;
-  }
-
-  return (
-      <View
-          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-          onLayout={onLayoutRootView}>
-        <Text>SplashScreen Demo! 👋</Text>
-        <Entypo name="rocket" size={30} />
-      </View>
-  );
+    return (
+        <View
+            style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <Text>SplashScreen Demo~~~! 👋</Text>
+            <Entypo name="rocket" size={30}/>
+            <Image style={styles.logo}
+                   source={{
+                       uri: 'https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/640px-SpongeBob_SquarePants_character.svg.png',
+                   }}
+            />
+        </View>
+    );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        paddingTop: 50,
+    },
+    tinyLogo: {
+        width: 50,
+        height: 50,
+    },
+    logo: {
+        width: 66,
+        height: 58,
+    },
+});
