@@ -9,6 +9,7 @@ import { useAssets } from 'expo-asset';
 import { NavigationContainer, DarkTheme, DefaultTheme } from '@react-navigation/native';
 import Tabs from "./navigation/Tabs";
 import { LogBox } from 'react-native';
+import Root from "./navigation/Root";
 
 LogBox.ignoreLogs(['Require cycle:'])
 
@@ -28,7 +29,7 @@ export default function App() {
     }
     return (
         <NavigationContainer theme={isDark ? DarkTheme : DefaultTheme}>
-            <Tabs/>
+            <Root />
         </NavigationContainer>
     );
 }
