@@ -9,13 +9,13 @@ const Btn = styled.View`
 `;
 
 const Title = styled.Text`
-    color: blue;
+    color: ${(props) => (props.selected ? "blue" : "red")};
 `;
 
 const Movies = ( {navigation: { navigate } }) => (
-    <Btn
-        onPress={() => navigate("Stack", {screen: "Three"})}>
-        <Title> Movies </Title>
+    <Btn onPress={() => navigate("Stack", { screen: "Three" })}>
+        <Title selected={false}>Movies</Title>
+        <Title selected={true}>Movies</Title>
     </Btn>
 );
 
