@@ -13,7 +13,11 @@ const Tab = createBottomTabNavigator();
 const Tabs = () => {
     const scheme = useColorScheme();
     return (
-        <Tab.Navigator screenOptions={{
+        <Tab.Navigator
+        sceneContainerStyle={{
+            backgroundColor: colors(scheme).bgColor
+        }}
+            screenOptions={{
             tabBarActiveTintColor: colors(scheme).activeTint,
             tabBarInactiveTintColor: colors(scheme).inactiveTint,
             tabBarStyle: {
