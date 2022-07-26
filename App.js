@@ -14,10 +14,9 @@ import Root from "./navigation/Root";
 LogBox.ignoreLogs(['Require cycle:'])
 
 export default function App() {
+    const isDark = useColorScheme() === "dark";
     const [assets] = useAssets([require("./b9472222.png")]);
     const [loaded] = Font.useFonts(Ionicons.font);
-    const isDark = useColorScheme() === "dark";
-
     if (!assets || !loaded) {
         return (
             <View
