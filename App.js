@@ -10,6 +10,8 @@ import { NavigationContainer, DarkTheme, DefaultTheme } from '@react-navigation/
 import Tabs from "./navigation/Tabs";
 import { LogBox } from 'react-native';
 import Root from "./navigation/Root";
+import {ThemeProvider} from "styled-components";
+import {darkTheme, lightTheme} from "./styled";
 
 LogBox.ignoreLogs(['Require cycle:'])
 
@@ -27,9 +29,11 @@ export default function App() {
             );
     }
     return (
-        <NavigationContainer theme={isDark ? DarkTheme : DefaultTheme}>
+        <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        <NavigationContainer>
             <Root />
         </NavigationContainer>
+        </ThemeProvider>
     );
 }
 
