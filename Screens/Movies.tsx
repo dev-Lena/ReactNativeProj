@@ -12,4 +12,12 @@ const Btn = styled.TouchableOpacity`
 const Title = styled.Text`
     color: ${(props) => props.theme.textColor};
 `;
+
+const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = ( {navigation: { navigate },
+}) => (
+    <Btn onPress={() => navigate("Stack", { screen: "Three" })}>
+        <Title>Movies</Title>
+    </Btn>
+);
+
 export default Movies;
