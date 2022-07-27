@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components/native";
-import {ActivityIndicator, Dimensions, ScrollView} from "react-native";
+import {ActivityIndicator, Dimensions, FlatList, RefreshControl, ScrollView, View} from "react-native";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
 import Swiper from 'react-native-swiper';
 import Slide from "../components/Slides";
@@ -77,6 +77,7 @@ const ComingSoonTitle = styled(ListTitle)`
 
 const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
     const [loading, setLoading] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
     const [nowPlaying, setNowPlaying] = useState([]);
     const [upcoming, setUpcoming] = useState([]);
     const [trending, setTrending] = useState([]);
@@ -111,11 +112,20 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
         getData();
         setLoading(false);
     }, []);
+    const onRefresh = async () => {
+        setRefreshing(true);
+        await getData();
+        setRefreshing(false);
+    };
     return loading ? (
         <Loader>
             <ActivityIndicator size="small" />
         </Loader>
-    ) : (<Container>
+    ) : (<Container
+            refreshControl={
+                <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+            }
+        >
         <Swiper
             horizontal
             loop
