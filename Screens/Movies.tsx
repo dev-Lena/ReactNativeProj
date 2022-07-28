@@ -37,6 +37,14 @@ const ComingSoonTitle = styled(ListTitle)`
    margin-bottom: 20px;
  `;
 
+const VSeparater = styled.View`
+    width: 20px;
+`;
+
+const HSeparater = styled.View`
+    height: 20px;
+`;
+
 const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
     const [refreshing, setRefreshing] = useState(false);
     const {isLoading: nowPlayingLoading,
@@ -53,6 +61,22 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
         moviesAPI.trending
     );
     const onRefresh = async () => {};
+    const renderVMedia = ({ item }) => (
+        <VMedia
+            posterPath={item.poster_path}
+            originalTitle={item.original_title}
+            voteAverage={item.vote_average}
+        />
+    );
+    const renderHMedia = ({ item }) => (
+        <HMedia
+            posterPath={item.poster_path}
+            originalTitle={item.original_title}
+            overview={item.overview}
+            releaseDate={item.release_date}
+        />
+    );
+    const movieKeyExtractor = (item) => item.id + ""
     const loading = nowPlayingLoading || upcomingLoading || trendingLoading
     return loading ? (
         <Loader>
@@ -96,30 +120,17 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
                             keyExtractor={ movieKeyExtractor }
                             showsHorizontalScrollIndicator={false}
                             contentContainerStyle={{ paddingHorizontal: 30 }}
-                            ItemSeparatorComponent={() => <View style={{ width: 30 }} />}
-                            renderItem={({ item }) => (
-                                <VMedia
-                                    posterPath={item.poster_path}
-                                    originalTitle={item.original_title}
-                                    voteAverage={item.vote_average}
-                                />
-                            )}
+                            ItemSeparatorComponent={ VSeparater }
+                            renderItem={renderVMedia}
                         />
                     </ListContainer>
                     <ComingSoonTitle>Coming soon</ComingSoonTitle>
                 </>
             }
-            keyExtractor={(item) => item.id + ""}
-            ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
-            renderItem={({ item }) => (
-                <HMedia
-                    posterPath={item.poster_path}
-                    originalTitle={item.original_title}
-                    overview={item.overview}
-                    releaseDate={item.release_date}
-                />
-            )}
             data={upcomingData.results}
+            keyExtractor={ movieKeyExtractor }
+            ItemSeparatorComponent={ HSeparater }
+            renderItem={renderHMedia}
         />
     );
 };
