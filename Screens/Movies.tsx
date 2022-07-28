@@ -3,7 +3,7 @@ import styled from "styled-components/native";
 import {ActivityIndicator, Dimensions, FlatList, RefreshControl, ScrollView, View} from "react-native";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
 import Swiper from 'react-native-swiper';
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import Slide from "../components/Slides";
 import VMedia from "../components/VMedia";
 import HMedia from "../components/HMedia";

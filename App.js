@@ -7,7 +7,7 @@ import * as Font from 'expo-font';
 import { Ionicons } from "@expo/vector-icons"
 import { useAssets } from 'expo-asset';
 import { NavigationContainer } from '@react-navigation/native';
-import { QueryClient, QueryClientProvider } from 'react-query'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { LogBox } from 'react-native';
 import Root from "./navigation/Root";
 import {ThemeProvider} from "styled-components";
