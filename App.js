@@ -1,19 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import React from "react";
-import {StyleSheet, Text, View, Image, useColorScheme} from 'react-native';
+import {StyleSheet, Text, View, useColorScheme} from 'react-native';
 import Entypo from '@expo/vector-icons/Entypo';
 import * as Font from 'expo-font';
 import { Ionicons } from "@expo/vector-icons"
 import { useAssets } from 'expo-asset';
-import { NavigationContainer, DarkTheme, DefaultTheme } from '@react-navigation/native';
-import Tabs from "./navigation/Tabs";
+import { NavigationContainer } from '@react-navigation/native';
+import { QueryClient, QueryClientProvider } from 'react-query'
 import { LogBox } from 'react-native';
 import Root from "./navigation/Root";
 import {ThemeProvider} from "styled-components";
 import {darkTheme, lightTheme} from "./styled";
 
 LogBox.ignoreLogs(['Require cycle:'])
+const queryClient = new QueryClient();
 
 export default function App() {
     const isDark = useColorScheme() === "dark";
@@ -29,11 +30,13 @@ export default function App() {
             );
     }
     return (
+        <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <NavigationContainer>
             <Root />
         </NavigationContainer>
         </ThemeProvider>
+        </QueryClientProvider>
     );
 }
 

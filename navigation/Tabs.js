@@ -18,6 +18,7 @@ const Tabs = () => {
             backgroundColor: colors(scheme).bgColor
         }}
             screenOptions={{
+            unmountOnBlur: true,
             tabBarActiveTintColor: colors(scheme).activeTint,
             tabBarInactiveTintColor: colors(scheme).inactiveTint,
             tabBarStyle: {
