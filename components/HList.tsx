@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import VMedia from "./VMedia";
 import {FlatList} from "react-native";
 
@@ -8,30 +8,31 @@ const ListContainer = styled.View`
  `;
 
 const ListTitle = styled.Text`
-    color: white;
-    font-size: 18px;
-    font-weight: 600;
-    margin-left: 30px;
-    margin-bottom: 20px;
-`;
+   color: white;
+   font-size: 18px;
+   font-weight: 600;
+   margin-left: 30px;
+   margin-bottom: 20px;
+ `;
 
-export const HListSeperator = styled.View`
-    width: 20px;
-`;
+export const HListSeparator = styled.View`
+   width: 20px;
+ `;
 
-interface  HlistProps {
+interface HListProps {
     title: string;
-    data: any[]
+    data: any[];
 }
-const HList: React.FC<HlistProps> = ({ title, data }) => (
+const HList: React.FC<HListProps> = ({ title, data }) => (
     <ListContainer>
         <ListTitle>{title}</ListTitle>
         <FlatList
             data={data}
             horizontal
             showsHorizontalScrollIndicator={false}
-            ItemSeparatorComponent={HListSeperator}
+            ItemSeparatorComponent={HListSeparator}
             contentContainerStyle={{ paddingHorizontal: 30 }}
+            keyExtractor={(item) => item.id + ""}
             renderItem={({ item }) => (
                 <VMedia
                     posterPath={item.poster_path}
