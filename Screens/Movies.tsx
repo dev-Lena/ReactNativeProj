@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components/native";
-import {ActivityIndicator, Dimensions, FlatList, RefreshControl, ScrollView, View} from "react-native";
+import {Dimensions, FlatList} from "react-native";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
 import Swiper from 'react-native-swiper';
 import {useQuery, useQueryClient} from '@tanstack/react-query'
@@ -9,6 +9,7 @@ import VMedia from "../components/VMedia";
 import HMedia from "../components/HMedia";
 import {MovieResponse, Movie, moviesAPI} from "../api";
 import Loader from "../components/Loader";
+import HList from "../components/HList";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
@@ -121,6 +122,9 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
                             )}
                         />) : null}
                     </ListContainer>
+                    {trendingData ? (
+                        <HList title='Trending Movies' data={trendingData.results} />
+                        ) : null }
                     <ComingSoonTitle>Coming soon</ComingSoonTitle>
                 </>
             }

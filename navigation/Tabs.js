@@ -3,10 +3,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Movies from "../Screens/Movies";
 import TV from "../Screens/TV";
 import Search from "../Screens/Search";
-import {Text, useColorScheme, View} from "react-native";
+import {useColorScheme} from "react-native";
 import colors from "../colors";
 import {Ionicons} from "@expo/vector-icons";
-import Stack from "./Stack";
 
 const Tab = createBottomTabNavigator();
 
