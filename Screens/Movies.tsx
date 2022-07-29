@@ -49,15 +49,15 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
     const [refreshing, setRefreshing] = useState(false);
     const {isLoading: nowPlayingLoading,
         data: nowPlayingData} = useQuery(
-        'nowPlaying',
+        ['nowPlaying'],
         moviesAPI.nowPlaying
     );
     const {isLoading: upcomingLoading, data: upcomingData} = useQuery(
-        'upcoming',
+        ['upcoming'],
         moviesAPI.upcoming
     );
     const {isLoading: trendingLoading, data: trendingData} = useQuery(
-        'trending',
+        ['trending'],
         moviesAPI.trending
     );
     const onRefresh = async () => {};
@@ -101,7 +101,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
                             height: SCREEN_HEIGHT / 4,
                         }}
                     >
-                        {nowPlayingData.results.map((movie) => (
+                        {nowPlayingData?.results.map((movie) => (
                             <Slide
                                 key={movie.id}
                                 backdropPath={movie.backdrop_path}
@@ -115,7 +115,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
                     <ListContainer>
                         <ListTitle>Trending Movies</ListTitle>
                         <TrendingScroll
-                            data={trendingData.results}
+                            data={trendingData?.results}
                             horizontal
                             keyExtractor={ movieKeyExtractor }
                             showsHorizontalScrollIndicator={false}
@@ -127,7 +127,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
                     <ComingSoonTitle>Coming soon</ComingSoonTitle>
                 </>
             }
-            data={upcomingData.results}
+            data={upcomingData?.results}
             keyExtractor={ movieKeyExtractor }
             ItemSeparatorComponent={ HSeparater }
             renderItem={renderHMedia}
