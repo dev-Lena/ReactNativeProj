@@ -102,29 +102,9 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
                             />
                         ))}
                     </Swiper>
-                    <ListContainer>
-                        <ListTitle>Trending Movies</ListTitle>
                         {trendingData ? (
-                            <FlatList
-                                style={{ marginTop: 20 }}
-                                horizontal
-                                data={trendingData.results}
-                                keyExtractor={(item) => item.id + ""}
-                                showsHorizontalScrollIndicator={false}
-                                contentContainerStyle={{ paddingHorizontal: 30 }}
-                                ItemSeparatorComponent={VSeparater}
-                            renderItem={({ item }) => (
-                                <VMedia
-                                    posterPath={item.poster_path || ""}
-                                    originalTitle={item.original_title}
-                                    voteAverage={item.vote_average}
-                                />
-                            )}
-                        />) : null}
-                    </ListContainer>
-                    {trendingData ? (
-                        <HList title='Trending Movies' data={trendingData.results} />
-                        ) : null }
+                            <HList title="Trending Movies" data={trendingData.results} />
+                        ) : null}
                     <ComingSoonTitle>Coming soon</ComingSoonTitle>
                 </>
             }

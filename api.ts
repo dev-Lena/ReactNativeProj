@@ -24,8 +24,8 @@ interface BaseResponse {
     total_pages: number;
 }
 
-interface MovieResponse extends BaseResponse {
-    results: Movie[]
+export interface MovieResponse extends BaseResponse {
+    results: Movie[];
 }
 
 const trending = () =>
