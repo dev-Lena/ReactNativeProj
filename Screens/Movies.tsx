@@ -8,12 +8,7 @@ import Slide from "../components/Slides";
 import VMedia from "../components/VMedia";
 import HMedia from "../components/HMedia";
 import {MovieResponse, Movie, moviesAPI} from "../api";
-
-const Loader = styled.View`
-    flex: 1;
-    justify-content: center;
-    align-items: center;
- `;
+import Loader from "../components/Loader";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
@@ -75,9 +70,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
     const loading = nowPlayingLoading || upcomingLoading || trendingLoading
     const refreshing = isRefetchingNowPlaying || isRefetchingUpcoming || isRefetchingTrending
     return loading ? (
-        <Loader>
-            <ActivityIndicator size="small" />
-        </Loader>
+        <Loader/>
     ) : upcomingData ? (
         <FlatList
             onRefresh={onRefresh}
