@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import React from "react";
-import {StyleSheet, Text, View, useColorScheme} from 'react-native';
+import {Text, View, useColorScheme} from 'react-native';
 import Entypo from '@expo/vector-icons/Entypo';
 import * as Font from 'expo-font';
 import { Ionicons } from "@expo/vector-icons"
@@ -39,17 +39,3 @@ export default function App() {
         </QueryClientProvider>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        paddingTop: 50,
-    },
-    tinyLogo: {
-        width: 50,
-        height: 50,
-    },
-    logo: {
-        width: 66,
-        height: 58,
-    },
-});
