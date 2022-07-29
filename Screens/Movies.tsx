@@ -3,7 +3,7 @@ import styled from "styled-components/native";
 import {ActivityIndicator, Dimensions, FlatList, RefreshControl, ScrollView, View} from "react-native";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
 import Swiper from 'react-native-swiper';
-import { useQuery } from '@tanstack/react-query'
+import {useQuery, useQueryClient} from '@tanstack/react-query'
 import Slide from "../components/Slides";
 import VMedia from "../components/VMedia";
 import HMedia from "../components/HMedia";
@@ -46,21 +46,31 @@ const HSeparater = styled.View`
 `;
 
 const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
-    const [refreshing, setRefreshing] = useState(false);
+    const queryClient = useQueryClient();
     const {isLoading: nowPlayingLoading,
-        data: nowPlayingData} = useQuery(
-        ['nowPlaying'],
+        data: nowPlayingData,
+        isRefetching: isRefetchingNowPlaying,
+    } = useQuery(
+        ['movies','nowPlaying'],
         moviesAPI.nowPlaying
     );
-    const {isLoading: upcomingLoading, data: upcomingData} = useQuery(
-        ['upcoming'],
+    const {isLoading: upcomingLoading,
+        data: upcomingData,
+        isRefetching: isRefetchingUpcoming,
+    } = useQuery(
+        ['movies', 'upcoming'],
         moviesAPI.upcoming
     );
-    const {isLoading: trendingLoading, data: trendingData} = useQuery(
-        ['trending'],
+    const {isLoading: trendingLoading,
+        data: trendingData,
+        isRefetching: isRefetchingTrending,
+    } = useQuery(
+        ['movies', 'trending'],
         moviesAPI.trending
     );
-    const onRefresh = async () => {};
+    const onRefresh = async () => {
+        queryClient.refetchQueries(['movies'])
+    };
     const renderVMedia = ({ item }) => (
         <VMedia
             posterPath={item.poster_path}
@@ -78,6 +88,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
     );
     const movieKeyExtractor = (item) => item.id + ""
     const loading = nowPlayingLoading || upcomingLoading || trendingLoading
+    const refreshing = isRefetchingNowPlaying || isRefetchingUpcoming || isRefetchingTrending
     return loading ? (
         <Loader>
             <ActivityIndicator size="small" />
