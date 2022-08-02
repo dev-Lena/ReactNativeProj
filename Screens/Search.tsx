@@ -19,10 +19,16 @@ const Search = () => {
     const {isLoading: moviesLoading, data: moviesData, refetch: searchMovies} = useQuery(
         ["searchMovies", query],
         moviesAPI.search,
+        {
+            enabled: false,
+        }
     );
     const {isLoading: tvLoading, data: tvData, refetch: searchTV} = useQuery(
         ["searchTV", query],
         tvAPI.search,
+        {
+            enabled: false,
+        }
     );
     const onChangeText = (text: string) => setQuery(text);
     const onSubmit = () => {
