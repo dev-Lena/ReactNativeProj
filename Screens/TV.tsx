@@ -4,7 +4,6 @@ import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {tvAPI} from "../api";
 import Loader from "../components/Loader";
 import HList from "../components/HList";
-import Movies from "./Movies";
 
 const TV = () => {
     const queryClient = useQueryClient();

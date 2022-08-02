@@ -5,7 +5,6 @@ import {NativeStackScreenProps} from "@react-navigation/native-stack";
 import Swiper from 'react-native-swiper';
 import {useQuery, useQueryClient} from '@tanstack/react-query'
 import Slide from "../components/Slides";
-import VMedia from "../components/VMedia";
 import HMedia from "../components/HMedia";
 import {MovieResponse, Movie, moviesAPI} from "../api";
 import Loader from "../components/Loader";
@@ -21,21 +20,9 @@ const ListTitle = styled.Text`
     margin-bottom: 20px;
 `;
 
-const TrendingScroll = styled.FlatList`
-  margin-top: 20px;
-`;
-
-const ListContainer = styled.View`
-   margin-bottom: 40px;
- `;
-
 const ComingSoonTitle = styled(ListTitle)`
    margin-bottom: 20px;
  `;
-
-const VSeparater = styled.View`
-    width: 20px;
-`;
 
 const HSeparater = styled.View`
     height: 20px;
