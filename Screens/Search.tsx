@@ -3,6 +3,8 @@ import styled from "styled-components/native";
 import {Alert} from "react-native";
 import {useQuery} from "@tanstack/react-query";
 import {moviesAPI, tvAPI} from "../api";
+import Loader from "../components/Loader";
+import HList from "../components/HList";
 
 const Container = styled.ScrollView``;
 
@@ -12,6 +14,7 @@ const SearchBar = styled.TextInput`
     border-radius: 15px;
     width: 90%;
     margin: 10px auto;
+    margin-bottom: 40px;
 `;
 
 const Search = () => {
@@ -47,6 +50,9 @@ const Search = () => {
                 onChangeText={onChangeText}
                 onSubmitEditing={onSubmit}
             />
+            {moviesLoading || tvLoading ? <Loader /> : null}
+            {moviesData ? <HList title="Movie Results" data={moviesData.results}/> : null}
+            {tvData ? <HList title="TV Results" data={tvData.results}/> : null}
         </Container>
     );
 };
