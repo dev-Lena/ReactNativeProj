@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import styled from "styled-components/native";
-import {Alert} from "react-native";
 import {useQuery} from "@tanstack/react-query";
 import {moviesAPI, tvAPI} from "../api";
 import Loader from "../components/Loader";
@@ -19,6 +18,7 @@ const SearchBar = styled.TextInput`
 
 const Search = () => {
     const [query, setQuery] = useState("");
+    const [inputText, setInputText] = useState("");
     const {isLoading: moviesLoading, data: moviesData, refetch: searchMovies} = useQuery(
         ["searchMovies", query],
         moviesAPI.search,
@@ -33,7 +33,10 @@ const Search = () => {
             enabled: false,
         }
     );
-    const onChangeText = (text: string) => setQuery(text);
+    const onChangeText = (text: string) => {
+        setInputText(text);
+        setQuery(text);
+    }
     const onSubmit = () => {
       if (query === "") {
           return ;
@@ -50,7 +53,7 @@ const Search = () => {
                 onChangeText={onChangeText}
                 onSubmitEditing={onSubmit}
             />
-            {moviesLoading || tvLoading ? <Loader /> : null}
+            {inputText.length !== 0 && (moviesLoading || tvLoading) ? <Loader /> : null}
             {moviesData ? <HList title="Movie Results" data={moviesData.results}/> : null}
             {tvData ? <HList title="TV Results" data={tvData.results}/> : null}
         </Container>
