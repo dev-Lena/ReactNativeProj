@@ -4,8 +4,7 @@ import Poster from "./Poster";
 import Votes from "./Votes";
 import {useNavigation} from "@react-navigation/native";
 import {TouchableOpacity} from "react-native";
-import {Movie} from "../api";
-import TV from "../Screens/TV";
+import {Movie, TV} from "../api";
 
 const HMovie = styled.View`
    padding: 0px 30px;

@@ -5,7 +5,7 @@ import styled from "styled-components/native";
 import { makeImgPath } from "../utils";
 import Poster from "./Poster";
 import {useNavigation} from "@react-navigation/native";
-import {Movie} from "../api";
+import {Movie, TV} from "../api";
 
 const BgImg = styled.Image``;
 
