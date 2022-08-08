@@ -2,10 +2,12 @@ import React from "react";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Detail from "../Screens/Detail";
 import colors from "../colors";
+import {useColorScheme} from "react-native";
 
 const NativeStack = createNativeStackNavigator();
 
 const Stack = () => {
+    const scheme = useColorScheme();
     return (
         <NativeStack.Navigator
             screenOptions={{
