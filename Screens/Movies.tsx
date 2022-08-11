@@ -10,6 +10,7 @@ import {MovieResponse, Movie, moviesAPI} from "../api";
 import Loader from "../components/Loader";
 import HList from "../components/HList";
 import {hasNextPage} from "@tanstack/react-query/build/types/packages/query-core/src/infiniteQueryBehavior";
+import {fetchMore} from "../utils";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
@@ -40,9 +41,9 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
     );
     const {isLoading: upcomingLoading,
         data: upcomingData,
-        hasNextPage,
-        fetchNextPage,
-    } = useInfiniteQuery<MovieResponse>(
+        hasNextPage: upcomingHasNext,
+        fetchNextPage: upcomingFetchNext,
+    } = useInfiniteQuery(
         ['movies', 'upcoming'],
         moviesAPI.upcoming, {
             getNextPageParam: (currentPage) => {
@@ -51,9 +52,12 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
             },
         }
     );
-    const {isLoading: trendingLoading,
+    const {
+        isLoading: trendingLoading,
         data: trendingData,
-    } = useQuery<MovieResponse>(
+        hasNextPage: trendingHasNext,
+        fetchNextPage: trendingFetchNext,
+    } = useInfiniteQuery(
         ['movies', 'trending'],
         moviesAPI.trending
     );
@@ -64,17 +68,12 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
     };
     const movieKeyExtractor = (item: Movie) => item.id + ""
     const loading = nowPlayingLoading || upcomingLoading || trendingLoading
-    const loadMore = () => {
-        if (hasNextPage) {
-            fetchNextPage();
-        }
-    }
     return loading ? (
         <Loader/>
     ) : upcomingData ? (
         <FlatList
-            onEndReached={loadMore}
-            // onEndReachedThreshold={0.4}
+            onEndReached={() => fetchMore(upcomingHasNext, upcomingFetchNext)}
+            onEndReachedThreshold={0.3}
             onRefresh={onRefresh}
             refreshing={refreshing}
             ListHeaderComponent={
@@ -105,13 +104,18 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
                         ))}
                     </Swiper>
                         {trendingData ? (
-                            <HList title="Trending Movies" data={trendingData.results}/>
+                            <HList
+                                title="Trending Movies"
+                                data={trendingData.pages.map((page) => page.results).flat()}
+                                hasNext={trendingHasNext}
+                                fetchNext={trendingFetchNext}
+                            />
                         ) : null}
                     <ComingSoonTitle>Coming soon</ComingSoonTitle>
                 </>
             }
             data={upcomingData.pages.map((page) => page.results).flat()}
-            keyExtractor={ (item) => item.id + ""  }
+            keyExtractor={ (item, index) => item.id + index.toString()  }
             ItemSeparatorComponent={ HSeparater }
             renderItem={({ item }) => (
                 <HMedia
