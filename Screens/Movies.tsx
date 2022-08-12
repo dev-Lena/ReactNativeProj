@@ -3,14 +3,14 @@ import styled from "styled-components/native";
 import {Alert, Dimensions, FlatList} from "react-native";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
 import Swiper from 'react-native-swiper';
-import {useInfiniteQuery, useQuery, useQueryClient} from '@tanstack/react-query'
+import {useInfiniteQuery, useIsFetching, useQuery, useQueryClient} from '@tanstack/react-query'
 import Slide from "../components/Slides";
 import HMedia from "../components/HMedia";
 import {MovieResponse, Movie, moviesAPI} from "../api";
 import Loader from "../components/Loader";
 import HList from "../components/HList";
 import {hasNextPage} from "@tanstack/react-query/build/types/packages/query-core/src/infiniteQueryBehavior";
-import {fetchMore, getNextPage} from "../utils";
+import {fetchMore, getNextPage, renderFooterComponent} from "../utils";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
@@ -41,6 +41,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
     );
     const {isLoading: upcomingLoading,
         data: upcomingData,
+        isFetchingNextPage: upcomingFetchingNextPage,
         hasNextPage: upcomingHasNext,
         fetchNextPage: upcomingFetchNext,
     } = useInfiniteQuery(
@@ -53,6 +54,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
     const {
         isLoading: trendingLoading,
         data: trendingData,
+        isFetchingNextPage: trendingFetchingNextPage,
         hasNextPage: trendingHasNext,
         fetchNextPage: trendingFetchNext,
     } = useInfiniteQuery(
@@ -110,10 +112,14 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
                                 data={trendingData.pages.map((page) => page.results).flat()}
                                 hasNext={trendingHasNext}
                                 fetchNext={trendingFetchNext}
+                                isFetchingNextPage={trendingFetchingNextPage}
                             />
                         ) : null}
                     <ComingSoonTitle>Coming soon</ComingSoonTitle>
                 </>
+            }
+            ListFooterComponent={
+                renderFooterComponent(upcomingFetchingNextPage)
             }
             data={upcomingData.pages.map((page) => page.results).flat()}
             keyExtractor={ (item, index) => item.id + index.toString()  }
@@ -126,7 +132,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
                 releaseDate={item.release_date}
                 fullData={item}
                 />
-                )}
+            )}
         />
     ) : null;
 };

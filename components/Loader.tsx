@@ -8,10 +8,12 @@ const Wrapper = styled.View`
     align-items: center;
  `;
 
-const Loader = () => (
-    <Wrapper>
-        <ActivityIndicator/>
-    </Wrapper>
-);
+const Loader = () => {
+    return (
+        <Wrapper>
+            <ActivityIndicator/>
+         </Wrapper>
+    )
+};
 
 export default Loader;

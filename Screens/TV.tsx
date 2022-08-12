@@ -11,6 +11,7 @@ const TV = () => {
     const [refreshing, setRefereshing] = useState(false)
     const {isLoading: todayLoading,
         data: todayData,
+        isFetchingNextPage: todayFetchingNextPage,
         hasNextPage: todayHasNext,
         fetchNextPage: todayFetchNext,
     } = useInfiniteQuery(
@@ -22,6 +23,7 @@ const TV = () => {
     );
     const {isLoading: trendingLoading,
         data: trendingData,
+        isFetchingNextPage: trendingFetchingNextPage,
         hasNextPage: trendingHasNext,
         fetchNextPage: trendingFetchNext,
     } = useInfiniteQuery(
@@ -33,6 +35,7 @@ const TV = () => {
     );
     const {isLoading: topLoading,
         data: topData,
+        isFetchingNextPage: topFetchingNextPage,
         hasNextPage: topHasNext,
         fetchNextPage: topFetchNext,
     } = useInfiniteQuery(
@@ -63,18 +66,21 @@ const TV = () => {
                 data={trendingData.pages.map((page) => page.results).flat()}
                 hasNext={trendingHasNext}
                 fetchNext={trendingFetchNext}
+                isFetchingNextPage={trendingFetchingNextPage}
             />
             <HList
                 title="Airing Today"
                 data={todayData.pages.map((page) => page.results).flat()}
                 hasNext={todayHasNext}
                 fetchNext={todayFetchNext}
+                isFetchingNextPage={todayFetchingNextPage}
             />
             <HList
                 title="Top Rated TV"
                 data={topData.pages.map((page) => page.results).flat()}
                 hasNext={topHasNext}
                 fetchNext={topFetchNext}
+                isFetchingNextPage={topFetchingNextPage}
             />
         </ScrollView>
   );

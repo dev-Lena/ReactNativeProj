@@ -1,5 +1,7 @@
 import {MovieResponse, TVResponse} from "./api";
 import {InfiniteQueryObserverResult} from "@tanstack/react-query";
+import Loader from "./components/Loader";
+import React from "react";
 
 export const makeImgPath = (
     img: string,
@@ -17,3 +19,7 @@ export const getNextPage = (currentPage) => {
     const nextPage = currentPage.page + 1;
     return nextPage > currentPage.total_pages ? null : nextPage;
 };
+
+export const renderFooterComponent = (isFetchingNextPage: boolean) => (
+    isFetchingNextPage ? Loader : null
+);
