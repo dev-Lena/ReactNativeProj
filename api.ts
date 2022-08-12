@@ -56,7 +56,7 @@ interface Fetchers<T> {
 }
 
 export const moviesAPI: Fetchers<MovieResponse> = {
-    trending: ({pageParam}) =>
+    trending: ({pageParam = 0}) =>
         fetch(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}&page=${pageParam ? pageParam :1}`)
             .then((res) => res.json()
         ),
@@ -64,8 +64,8 @@ export const moviesAPI: Fetchers<MovieResponse> = {
         fetch(`${BASE_URL}/movie/upcoming?api_key=${API_KEY}&language=en-US&page=${pageParam ? pageParam : 1}`)
             .then(res => res.json()
         ),
-    nowPlaying: () =>
-        fetch(`${BASE_URL}/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1&region=KR`)
+    nowPlaying: ({pageParam = 0}) =>
+        fetch(`${BASE_URL}/movie/now_playing?api_key=${API_KEY}&language=en-US&page=${pageParam ? pageParam : 1}`)
             .then(res => res.json()
         ),
     search: ({queryKey}) => {
@@ -81,19 +81,19 @@ export const moviesAPI: Fetchers<MovieResponse> = {
     },
 };
 export const tvAPI: Fetchers<TVResponse> = {
-    trending: () =>
-        fetch(`${BASE_URL}/trending/tv/week?api_key=${API_KEY}`)
+    trending: ({pageParam = 0}) =>
+        fetch(`${BASE_URL}/trending/tv/week?api_key=${API_KEY}&page=${pageParam ? pageParam : 1}`)
             .then(res => res.json()
         ),
-    airingToday: () =>
-        fetch(`${BASE_URL}/tv/airing_today?api_key=${API_KEY}`)
+    airingToday: ({pageParam = 0}) =>
+        fetch(`${BASE_URL}/tv/airing_today?api_key=${API_KEY}&page=${pageParam ? pageParam : 1}`)
             .then(res => res.json()),
     topRated: () =>
         fetch(`${BASE_URL}/tv/top_rated?api_key=${API_KEY}`)
             .then(res => res.json()),
-    search: ({queryKey}) => {
+    search: ({queryKey, pageParam = 0}) => {
         const [_, query] = queryKey;
-        return fetch(`${BASE_URL}/search/tv?api_key=${API_KEY}&language=en-US&page=1&region=KR&query=${query}`)
+        return fetch(`${BASE_URL}/search/tv?api_key=${API_KEY}&language=en-US&page=1query=${query}&page=${pageParam ? pageParam : 1}`)
             .then(res => res.json());
     },
     detail: ({ queryKey }) => {

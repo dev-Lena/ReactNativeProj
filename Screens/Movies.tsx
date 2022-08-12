@@ -10,7 +10,7 @@ import {MovieResponse, Movie, moviesAPI} from "../api";
 import Loader from "../components/Loader";
 import HList from "../components/HList";
 import {hasNextPage} from "@tanstack/react-query/build/types/packages/query-core/src/infiniteQueryBehavior";
-import {fetchMore} from "../utils";
+import {fetchMore, getNextPage} from "../utils";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
@@ -47,10 +47,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
         ['movies', 'upcoming'],
         moviesAPI.upcoming, {
             keepPreviousData: true,
-            getNextPageParam: (currentPage) => {
-                const nextPage = currentPage.page + 1
-                return nextPage > currentPage.total_pages ? null : nextPage;
-            },
+            getNextPageParam: getNextPage,
         }
     );
     const {
@@ -60,7 +57,10 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
         fetchNextPage: trendingFetchNext,
     } = useInfiniteQuery(
         ['movies', 'trending'],
-        moviesAPI.trending
+        moviesAPI.trending, {
+            keepPreviousData: true,
+            getNextPageParam: getNextPage,
+        }
     );
     const onRefresh = async () => {
         setRefreshing(true);

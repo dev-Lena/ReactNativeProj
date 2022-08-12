@@ -12,3 +12,8 @@ type TVFetch = Promise<InfiniteQueryObserverResult<TVResponse, unknown>>
 
 export type FetchNext = () =>  TVFetch | MovieFetch
 export const fetchMore = (hasNext:boolean | undefined,fetchNext:FetchNext) => hasNext ? fetchNext() : null
+
+export const getNextPage = (currentPage) => {
+    const nextPage = currentPage.page + 1;
+    return nextPage > currentPage.total_pages ? null : nextPage;
+};
