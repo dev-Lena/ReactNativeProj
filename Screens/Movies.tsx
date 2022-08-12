@@ -46,6 +46,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
     } = useInfiniteQuery(
         ['movies', 'upcoming'],
         moviesAPI.upcoming, {
+            keepPreviousData: true,
             getNextPageParam: (currentPage) => {
                 const nextPage = currentPage.page + 1
                 return nextPage > currentPage.total_pages ? null : nextPage;

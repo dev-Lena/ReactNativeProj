@@ -56,11 +56,11 @@ interface Fetchers<T> {
 }
 
 export const moviesAPI: Fetchers<MovieResponse> = {
-    trending:({pageParam}) =>
+    trending: ({pageParam}) =>
         fetch(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}&page=${pageParam ? pageParam :1}`)
             .then((res) => res.json()
         ),
-    upcoming: (pageParam) =>
+    upcoming: ({pageParam = 0}) =>
         fetch(`${BASE_URL}/movie/upcoming?api_key=${API_KEY}&language=en-US&page=${pageParam ? pageParam : 1}`)
             .then(res => res.json()
         ),
