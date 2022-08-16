@@ -1,4 +1,4 @@
-const API_KEY = '';
+const API_KEY = 'f6a42c5f7ed6fa7bab7aa1e941eea383';
 import TV from "./Screens/TV";
 import {QueryFunction} from "@tanstack/react-query";
 const BASE_URL = 'https://api.themoviedb.org/3';
