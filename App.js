@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { Animated, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 
@@ -17,15 +17,13 @@ const AnimatedBox = Animated.createAnimatedComponent(Box);
 
 export default function App() {
     const [up, setUp] = useState(false);
-    const Y = new Animated.Value(0);
+    const Y = useRef(new Animated.Value(0)).current;
+    const toggleUp = () => setUp((prev) => !prev);
     const moveUp = () => {
-        Animated.spring( Y, {
-            toValue: -200,
-            // bounciness: 20,
-            tension: 50,
-            friction: 1,
+        Animated.timing( Y, {
+            toValue: up ? 200 : -200,
             useNativeDriver: true,
-        }).start();
+        }).start(toggleUp);
     };
     // Y.addListener(()=> console.log(Y));
     return (
