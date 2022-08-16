@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "animation-interactivity-app",
+    "slug": "animation-interactivity-app",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "animation-interactivity-app"
+}
