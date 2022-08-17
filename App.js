@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Button, SafeAreaView, StyleSheet, View } from 'react-native';
 import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
+    useAnimatedStyle,
+    useSharedValue, withRepeat, withSequence, withSpring, withTiming,
 } from 'react-native-reanimated';
 
 const App = () => {
@@ -26,7 +26,9 @@ const App = () => {
           <Button
               title="이동하기"
               // 버튼을 누르면 랜덤한 곳으로 이동합니다.
-              onPress={() => (x.value = Math.random() * 255)}
+              onPress={() =>
+                  (x.value = withSpring(Math.random() * 255))
+              }
           />
         </View>
       </SafeAreaView>
