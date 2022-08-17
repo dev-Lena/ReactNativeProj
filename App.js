@@ -7,8 +7,36 @@ import Animated, {
 
 const App = () => {
   const x = useSharedValue(0);
+  const rotation = useSharedValue(0);
 
-  // 애니메이션 효과를 주는 style 의 경우 useAnimatedStyle Hook 을 이용하여 따로 정의합니다.
+    useEffect(() => {
+        // withRepeat 로 애니메이션을 반복합니다.
+        rotation.value = withRepeat(
+            // 100ms 동안 값을 5로 이동하고, 다음 100ms 동안 값을 -5로 이동합니다.
+            withSequence(
+                withTiming(5, { duration: 100 }),
+                withTiming(-5, { duration: 100 }),
+            ),
+            // 반복횟수 지정을 0 으로 설정하면 무한히 반복합니다.
+            0,
+        );
+    }, [rotation]);
+
+    const rotationStyle = useAnimatedStyle(
+        () => ({
+            transform: [
+                {
+                    // rotate 값으로 -5에서 5 사이를 왔다갔다하는 rotation 값에 deg 를 붙여서
+                    // -5도에서 5도 사이를 왔다갔다하는 스타일을 적용합니다.
+                    rotate: `${rotation.value}deg`,
+                },
+            ],
+        }),
+        [],
+    );
+
+
+    // 애니메이션 효과를 주는 style 의 경우 useAnimatedStyle Hook 을 이용하여 따로 정의합니다.
   const animatedStyle = useAnimatedStyle(
       () => ({
         transform: [{ translateX: x.value }],
@@ -19,7 +47,7 @@ const App = () => {
   return (
       <SafeAreaView style={styles.view}>
         <View style={styles.rectView}>
-          <Animated.View style={[styles.rect, animatedStyle]} />
+          <Animated.View style={[styles.rect, rotationStyle]} />
         </View>
 
         <View style={styles.button}>
